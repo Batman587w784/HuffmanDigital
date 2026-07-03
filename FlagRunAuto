@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flag Run Auto Body</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#c8251b;
+  --red-mid:#e02d22;
+  --red-light:#ff3b30;
+  --black:#111111;
+  --ink:#1a1a1a;
+  --white:#ffffff;
+  --off-white:#f8f7f5;
+  --gray-1:#f0eeeb;
+  --gray-2:#e0ddd8;
+  --gray-3:#b0ada8;
+  --gray-4:#6b6866;
+  --text:#1a1a1a;
+  --text-muted:#6b6866;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
+
+/* ─── UTIL ─── */
+.container{max-width:1160px;margin:0 auto;padding:0 40px}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+.serif{font-family:'DM Serif Display',serif}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* ─── NAV ─── */
+header{
+  position:fixed;top:0;width:100%;z-index:200;
+  background:rgba(255,255,255,0.97);
+  border-bottom:1px solid var(--gray-2);
+  backdrop-filter:blur(12px);
+}
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  height:70px;
+  max-width:1160px;margin:0 auto;padding:0 40px;
+}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer}
+.logo-mark{
+  width:40px;height:40px;background:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:17px;color:white;
+  clip-path:polygon(8% 0%,92% 0%,100% 8%,100% 92%,92% 100%,8% 100%,0% 92%,0% 8%);
+}
+.logo-text{font-size:17px;font-weight:600;color:var(--black);letter-spacing:-0.2px}
+.logo-text em{color:var(--red);font-style:normal}
+nav ul{display:flex;list-style:none;gap:8px;align-items:center}
+nav ul a{
+  text-decoration:none;color:var(--text-muted);
+  font-size:14px;font-weight:500;
+  padding:8px 14px;border-radius:6px;
+  transition:color .2s,background .2s;
+}
+nav ul a:hover,nav ul a.active{color:var(--black);background:var(--gray-1)}
+.btn-estimate{
+  background:var(--red);color:white;border:none;
+  padding:10px 22px;border-radius:6px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;letter-spacing:.2px;transition:background .2s;
+}
+.btn-estimate:hover{background:var(--red-mid)}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--black);transition:.3s}
+.mobile-nav{
+  display:none;position:fixed;top:70px;left:0;right:0;bottom:0;
+  background:white;z-index:199;padding:32px 40px;
+  flex-direction:column;gap:4px;overflow-y:auto;
+}
+.mobile-nav.open{display:flex}
+.mobile-nav a{
+  text-decoration:none;color:var(--text);font-size:18px;font-weight:500;
+  padding:14px 0;border-bottom:1px solid var(--gray-1);
+}
+.mobile-nav .btn-estimate{margin-top:20px;width:100%;text-align:center;padding:16px;font-size:15px}
+
+/* ─── PAGES ─── */
+.page{display:none;padding-top:70px;min-height:100vh}
+.page.active{display:block}
+
+/* ─── HOME ─── */
+.hero{
+  background:var(--black);
+  padding:90px 0 80px;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(200,37,27,0.12) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 1fr;gap:80px;
+  align-items:center;
+  max-width:1160px;margin:0 auto;padding:0 40px;
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(200,37,27,0.15);
+  border:1px solid rgba(200,37,27,0.3);
+  color:#ff6b63;font-size:11px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;padding:6px 14px;border-radius:100px;
+  margin-bottom:28px;
+}
+.hero-kicker::before{content:'';width:6px;height:6px;background:#ff6b63;border-radius:50%}
+.hero h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(46px,5.5vw,74px);
+  line-height:1.05;color:white;
+  letter-spacing:-1px;margin-bottom:24px;
+}
+.hero h1 em{color:var(--red-light);font-style:italic}
+.hero-body{font-size:16px;color:#a8a5a0;line-height:1.75;max-width:420px;margin-bottom:36px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px}
+.btn-primary{
+  background:var(--red);color:white;border:none;
+  padding:14px 28px;border-radius:6px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;transition:background .2s,transform .15s;letter-spacing:.2px;
+}
+.btn-primary:hover{background:var(--red-mid);transform:translateY(-1px)}
+.btn-outline-light{
+  background:transparent;color:white;
+  border:1px solid rgba(255,255,255,0.2);
+  padding:14px 24px;border-radius:6px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;
+  cursor:pointer;transition:border-color .2s,background .2s;
+}
+.btn-outline-light:hover{border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.05)}
+.hero-trust{display:flex;flex-wrap:wrap;gap:20px}
+.trust-pill{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:#888;font-weight:500;
+}
+.trust-pip{width:4px;height:4px;background:var(--red);border-radius:50%;flex-shrink:0}
+
+/* hero right */
+.hero-card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;overflow:hidden;
+}
+.hero-card-img{
+  aspect-ratio:4/3;background:rgba(255,255,255,0.04);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;
+  color:#555;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.hero-card-img svg{opacity:.25}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr)}
+.hero-stat{
+  padding:20px 18px;text-align:center;
+  border-right:1px solid rgba(255,255,255,0.06);
+}
+.hero-stat:last-child{border-right:none}
+.stat-n{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;color:white;letter-spacing:-0.5px;display:block
+}
+.stat-l{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+
+/* marquee strip */
+.strip{
+  background:var(--red);padding:11px 0;
+  overflow:hidden;white-space:nowrap;
+}
+.strip-track{
+  display:inline-flex;gap:0;
+  animation:marquee 25s linear infinite;
+}
+.strip-track:hover{animation-play-state:paused}
+.strip-item{
+  font-size:12px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;color:white;opacity:.9;
+  padding:0 28px;
+}
+.strip-item::after{content:'·';margin-left:28px;opacity:.5}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* home sections */
+.section{padding:96px 0}
+.section-sm{padding:72px 0}
+.section.bg-off{background:var(--off-white)}
+.section.bg-black{background:var(--black)}
+.section.bg-red{background:var(--red)}
+.section-head{margin-bottom:56px}
+.section-head h2{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(34px,3.5vw,50px);
+  line-height:1.08;letter-spacing:-0.5px;
+  margin-bottom:14px;
+}
+.section-head p{font-size:16px;color:var(--text-muted);line-height:1.7;max-width:520px}
+
+/* services home */
+.services-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--gray-2);border:1px solid var(--gray-2);border-radius:12px;overflow:hidden}
+.svc-card{
+  background:white;padding:36px 32px;
+  position:relative;transition:background .25s;
+}
+.svc-card::before{
+  content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--red);
+  transition:height .3s;
+}
+.svc-card:hover{background:var(--off-white)}
+.svc-card:hover::before{height:100%}
+.svc-icon{font-size:26px;margin-bottom:16px}
+.svc-name{font-weight:600;font-size:16px;margin-bottom:8px}
+.svc-desc{font-size:13px;color:var(--text-muted);line-height:1.6}
+
+/* promise row */
+.promise-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.promise{text-align:center}
+.promise-num{
+  font-family:'DM Serif Display',serif;
+  font-size:48px;color:var(--red);
+  margin-bottom:8px;letter-spacing:-1px;
+}
+.promise-label{font-weight:600;font-size:14px;margin-bottom:6px}
+.promise-sub{font-size:13px;color:var(--text-muted);line-height:1.5}
+
+/* reviews home */
+.reviews-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.review-card{
+  border:1px solid var(--gray-2);border-radius:12px;
+  padding:28px 26px;background:white;
+}
+.stars{color:var(--red);font-size:14px;letter-spacing:2px;margin-bottom:14px}
+.review-text{font-size:14px;line-height:1.75;color:var(--text);margin-bottom:20px}
+.reviewer{display:flex;align-items:center;gap:12px}
+.avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--black);color:white;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:15px;
+}
+.rev-name{font-size:13px;font-weight:600}
+.rev-context{font-size:12px;color:var(--text-muted)}
+
+/* cta band */
+.cta-band{
+  background:var(--black);
+  padding:80px 0;
+  display:flex;align-items:center;
+}
+.cta-inner{
+  max-width:1160px;margin:0 auto;padding:0 40px;
+  display:flex;justify-content:space-between;align-items:center;gap:40px;
+  flex-wrap:wrap;
+}
+.cta-inner h2{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,3vw,42px);color:white;
+  letter-spacing:-0.5px;max-width:480px;line-height:1.15;
+}
+.cta-inner h2 em{color:var(--red-light);font-style:italic}
+
+/* ─── ABOUT PAGE ─── */
+.page-hero{
+  background:var(--off-white);
+  border-bottom:1px solid var(--gray-2);
+  padding:72px 0 64px;
+}
+.page-hero h1{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(38px,5vw,62px);
+  letter-spacing:-1px;line-height:1.05;
+  margin-bottom:16px;
+}
+.page-hero p{font-size:17px;color:var(--text-muted);max-width:520px;line-height:1.7}
+.about-split{display:grid;grid-template-columns:1.1fr 1fr;gap:80px;align-items:start}
+.about-copy h2{
+  font-family:'DM Serif Display',serif;
+  font-size:36px;letter-spacing:-0.5px;margin-bottom:16px;line-height:1.1;
+}
+.about-copy p{font-size:15px;color:var(--text-muted);line-height:1.8;margin-bottom:18px}
+.checklist{list-style:none;margin-top:8px}
+.checklist li{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--gray-1);
+  font-size:14px;
+}
+.checklist li:last-child{border-bottom:none}
+.chk{
+  width:20px;height:20px;background:var(--red);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  color:white;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px;
+}
+.about-aside{position:sticky;top:90px}
+.aside-card{
+  background:var(--off-white);border:1px solid var(--gray-2);
+  border-radius:14px;padding:36px;margin-bottom:20px;
+}
+.aside-card h3{font-weight:600;font-size:16px;margin-bottom:6px}
+.aside-card p{font-size:13px;color:var(--text-muted);line-height:1.65}
+.aside-card .big{
+  font-family:'DM Serif Display',serif;
+  font-size:52px;color:var(--red);letter-spacing:-1px;margin-bottom:4px;
+}
+.cert-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.cert-badge{
+  background:white;border:1px solid var(--gray-2);
+  border-radius:8px;padding:10px 14px;
+  font-size:12px;font-weight:600;color:var(--text);
+}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.team-card{text-align:center}
+.team-photo{
+  aspect-ratio:3/2;background:var(--gray-1);
+  border-radius:12px;margin-bottom:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:36px;color:var(--gray-3);border:1px solid var(--gray-2);
+}
+.team-name{font-weight:600;font-size:15px;margin-bottom:4px}
+.team-role{font-size:13px;color:var(--text-muted)}
+
+/* ─── SERVICES PAGE ─── */
+.services-full{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.svc-full{
+  border:1px solid var(--gray-2);border-radius:14px;
+  padding:40px 36px;background:white;position:relative;overflow:hidden;
+  transition:border-color .25s,box-shadow .25s;
+}
+.svc-full:hover{border-color:var(--red);box-shadow:0 8px 32px rgba(200,37,27,.08)}
+.svc-full-icon{font-size:32px;margin-bottom:20px}
+.svc-full h3{font-family:'DM Serif Display',serif;font-size:24px;margin-bottom:10px;letter-spacing:-0.3px}
+.svc-full p{font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:20px}
+.svc-full ul{list-style:none}
+.svc-full ul li{
+  font-size:13px;color:var(--text);padding:6px 0;
+  border-bottom:1px solid var(--gray-1);
+  display:flex;align-items:center;gap:8px;
+}
+.svc-full ul li:last-child{border-bottom:none}
+.svc-full ul li::before{content:'→';color:var(--red);font-size:12px;font-weight:700}
+.process-steps{counter-reset:step;display:flex;flex-direction:column;gap:0}
+.step{
+  display:flex;gap:24px;padding:28px 0;
+  border-bottom:1px solid var(--gray-1);
+}
+.step:last-child{border-bottom:none}
+.step-num{
+  font-family:'DM Serif Display',serif;
+  font-size:48px;color:var(--gray-2);
+  line-height:1;flex-shrink:0;width:56px;
+  letter-spacing:-1px;
+}
+.step-body h4{font-weight:600;font-size:16px;margin-bottom:6px}
+.step-body p{font-size:14px;color:var(--text-muted);line-height:1.65}
+
+/* ─── REVIEWS PAGE ─── */
+.reviews-full{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.review-full{
+  border:1px solid var(--gray-2);border-radius:12px;
+  padding:32px;background:white;
+}
+.rating-bar{
+  display:flex;align-items:center;gap:16px;
+  padding:28px 32px;
+  background:var(--off-white);border:1px solid var(--gray-2);
+  border-radius:14px;margin-bottom:40px;
+}
+.rating-big{
+  font-family:'DM Serif Display',serif;
+  font-size:64px;color:var(--black);letter-spacing:-2px;flex-shrink:0;line-height:1;
+}
+.rating-right{}
+.rating-stars{color:var(--red);font-size:22px;letter-spacing:3px;margin-bottom:6px}
+.rating-count{font-size:13px;color:var(--text-muted)}
+
+/* ─── CONTACT PAGE ─── */
+.contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:64px;align-items:start}
+.contact-details{}
+.contact-details h2{
+  font-family:'DM Serif Display',serif;
+  font-size:34px;margin-bottom:12px;letter-spacing:-0.5px;
+}
+.contact-details p{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:36px}
+.contact-item{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start}
+.contact-icon{
+  width:44px;height:44px;background:var(--off-white);
+  border:1px solid var(--gray-2);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.contact-item-label{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);font-weight:600;margin-bottom:3px}
+.contact-item-val{font-size:15px;font-weight:500}
+.hours-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:28px;padding-top:28px;border-top:1px solid var(--gray-2)}
+.hour-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--gray-2)}
+.hour-row:last-child{border-bottom:none}
+.hour-row span:last-child{color:var(--text-muted)}
+.simple-form{background:var(--off-white);border:1px solid var(--gray-2);border-radius:16px;padding:44px}
+.simple-form h3{font-family:'DM Serif Display',serif;font-size:28px;margin-bottom:6px;letter-spacing:-0.3px}
+.simple-form > p{font-size:14px;color:var(--text-muted);margin-bottom:28px}
+.field{margin-bottom:18px}
+.field label{font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:7px}
+.field input,.field select,.field textarea{
+  width:100%;background:white;
+  border:1px solid var(--gray-2);border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);
+  padding:12px 16px;outline:none;transition:border-color .2s;
+}
+.field input:focus,.field select,.field textarea:focus{border-color:var(--black)}
+.field textarea{resize:vertical;min-height:100px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ─── ESTIMATE MODAL ─── */
+.overlay{
+  display:none;position:fixed;inset:0;z-index:900;
+  background:rgba(17,17,17,0.75);
+  backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;
+  padding:20px;
+}
+.overlay.open{display:flex}
+.modal{
+  background:white;border-radius:16px;
+  width:100%;max-width:600px;
+  max-height:92vh;overflow-y:auto;
+  box-shadow:0 32px 80px rgba(0,0,0,.3);
+}
+.modal-head{
+  position:sticky;top:0;background:white;z-index:1;
+  padding:28px 36px 20px;
+  border-bottom:1px solid var(--gray-2);
+  display:flex;justify-content:space-between;align-items:flex-start;
+}
+.modal-head h2{font-family:'DM Serif Display',serif;font-size:26px;letter-spacing:-0.3px}
+.modal-head h2 span{color:var(--red)}
+.modal-head p{font-size:13px;color:var(--text-muted);margin-top:3px}
+.modal-close{
+  background:var(--gray-1);border:none;
+  width:34px;height:34px;border-radius:8px;
+  cursor:pointer;font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s;flex-shrink:0;margin-top:2px;
+}
+.modal-close:hover{background:var(--gray-2)}
+.modal-body{padding:28px 36px}
+
+/* step progress */
+.step-prog{display:flex;gap:0;margin-bottom:32px;border-radius:8px;overflow:hidden;border:1px solid var(--gray-2)}
+.step-tab{
+  flex:1;padding:11px 10px;text-align:center;
+  font-size:11px;font-weight:600;letter-spacing:.5px;
+  text-transform:uppercase;color:var(--text-muted);
+  background:var(--gray-1);border-right:1px solid var(--gray-2);
+  transition:background .2s,color .2s;cursor:default;
+}
+.step-tab:last-child{border-right:none}
+.step-tab.done{background:var(--off-white);color:var(--text)}
+.step-tab.active{background:var(--red);color:white}
+
+.form-step{display:none}
+.form-step.active{display:block}
+.modal-foot{
+  padding:0 36px 28px;
+  display:flex;justify-content:space-between;align-items:center;
+  gap:12px;
+}
+.btn-back{
+  background:none;border:1px solid var(--gray-2);
+  color:var(--text-muted);padding:11px 22px;border-radius:7px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  cursor:pointer;transition:.2s;
+}
+.btn-back:hover{color:var(--text);border-color:var(--black)}
+.btn-next{
+  background:var(--black);color:white;border:none;
+  padding:12px 26px;border-radius:7px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:background .2s;margin-left:auto;
+}
+.btn-next:hover{background:#2a2a2a}
+.btn-submit-main{
+  background:var(--red);color:white;border:none;
+  padding:12px 28px;border-radius:7px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  cursor:pointer;transition:background .2s;margin-left:auto;
+}
+.btn-submit-main:hover{background:var(--red-mid)}
+.upload-zone{
+  border:2px dashed var(--gray-2);border-radius:10px;
+  padding:28px 20px;text-align:center;cursor:pointer;
+  background:var(--off-white);position:relative;
+  transition:border-color .2s;
+}
+.upload-zone:hover{border-color:var(--black)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-zone p{font-size:13px;color:var(--text-muted)}
+.upload-zone strong{color:var(--text)}
+.thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.thumbs img{width:72px;height:72px;object-fit:cover;border-radius:8px;border:1px solid var(--gray-2)}
+
+/* success */
+.success{display:none;text-align:center;padding:56px 36px}
+.success.show{display:block}
+.success-mark{font-size:52px;margin-bottom:16px}
+.success h3{font-family:'DM Serif Display',serif;font-size:30px;margin-bottom:10px}
+.success p{font-size:14px;color:var(--text-muted);line-height:1.7;max-width:360px;margin:0 auto 28px}
+.success strong{color:var(--red)}
+
+/* ─── FOOTER ─── */
+footer{
+  background:var(--ink);color:white;
+  padding:64px 0 32px;
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:48px;
+  margin-bottom:48px;
+}
+.footer-brand p{font-size:13px;color:#777;line-height:1.7;margin-top:12px;max-width:240px}
+.footer-col h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#666;margin-bottom:16px}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:10px}
+.footer-col a{text-decoration:none;color:#999;font-size:14px;transition:color .2s;cursor:pointer}
+.footer-col a:hover{color:white}
+.footer-bottom{
+  border-top:1px solid #222;padding-top:24px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.footer-copy{font-size:12px;color:#555}
+.footer-copy span{color:var(--red)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  .container{padding:0 20px}
+  .nav{padding:0 20px}
+  nav ul{display:none}
+  .hamburger{display:flex}
+  .hero-inner{grid-template-columns:1fr;gap:48px}
+  .hero-card{display:none}
+  .services-strip{grid-template-columns:1fr 1fr}
+  .promise-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .reviews-row{grid-template-columns:1fr}
+  .about-split{grid-template-columns:1fr}
+  .about-aside{position:static}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .services-full{grid-template-columns:1fr}
+  .reviews-full{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:36px}
+  .cta-inner{flex-direction:column;text-align:center}
+  .hero-inner,.cta-inner,.footer-grid{padding:0 20px}
+  .section{padding:64px 0}
+  .page-hero{padding:48px 0 40px}
+  .modal{border-radius:10px}
+  .modal-head,.modal-body,.modal-foot{padding-left:22px;padding-right:22px}
+}
+@media(max-width:600px){
+  .services-strip{grid-template-columns:1fr}
+  .promise-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+  .hero h1{font-size:40px}
+}
+
+/* entry animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.page.active .hero-kicker{animation:fadeUp .5s .1s both}
+.page.active .hero h1{animation:fadeUp .55s .18s both}
+.page.active .hero-body{animation:fadeUp .55s .26s both}
+.page.active .hero-actions{animation:fadeUp .55s .34s both}
+.page.active .hero-trust{animation:fadeUp .55s .42s both}
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="nav">
+    <div class="logo" onclick="showPage('home')">
+      <div class="logo-mark">FR</div>
+      <span class="logo-text">Flag Run <em>Auto Body</em></span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" id="nav-home" class="active" onclick="showPage('home');return false">Home</a></li>
+        <li><a href="#" id="nav-about" onclick="showPage('about');return false">About</a></li>
+        <li><a href="#" id="nav-services" onclick="showPage('services');return false">Services</a></li>
+        <li><a href="#" id="nav-reviews" onclick="showPage('reviews');return false">Reviews</a></li>
+        <li><a href="#" id="nav-contact" onclick="showPage('contact');return false">Contact</a></li>
+      </ul>
+    </nav>
+    <button class="btn-estimate" onclick="openModal()">Get Free Estimate</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#" onclick="showPage('home');toggleMenu();return false">Home</a>
+  <a href="#" onclick="showPage('about');toggleMenu();return false">About</a>
+  <a href="#" onclick="showPage('services');toggleMenu();return false">Services</a>
+  <a href="#" onclick="showPage('reviews');toggleMenu();return false">Reviews</a>
+  <a href="#" onclick="showPage('contact');toggleMenu();return false">Contact</a>
+  <button class="btn-estimate" onclick="openModal();toggleMenu()">Get Free Estimate</button>
+</div>
+
+<!-- ══════════ HOME ══════════ -->
+<div class="page active" id="page-home">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-kicker">Flag Run Auto Body</div>
+        <h1>Precision Collision <em>Repair</em> You Can Trust.</h1>
+        <p class="hero-body">Restoring vehicles to factory condition with expert craftsmanship, state-of-the-art equipment, and a warranty that lasts a lifetime.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="openModal()">Get Free Estimate</button>
+          <button class="btn-outline-light" onclick="showPage('services')">Our Services →</button>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-pill"><span class="trust-pip"></span>Lifetime Warranty</div>
+          <div class="trust-pill"><span class="trust-pip"></span>All Insurance Accepted</div>
+          <div class="trust-pill"><span class="trust-pip"></span>I-CAR Certified</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-img">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Add your shop photo here</span>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="stat-n">2,500+</span><span class="stat-l">Vehicles Restored</span></div>
+          <div class="hero-stat"><span class="stat-n">15+</span><span class="stat-l">Years Experience</span></div>
+          <div class="hero-stat"><span class="stat-n">4.9★</span><span class="stat-l">Google Rating</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="strip-track">
+      <span class="strip-item">Collision Repair</span>
+      <span class="strip-item">Paint & Refinishing</span>
+      <span class="strip-item">Frame Straightening</span>
+      <span class="strip-item">PDR Dent Removal</span>
+      <span class="strip-item">Glass Replacement</span>
+      <span class="strip-item">Insurance Claims</span>
+      <span class="strip-item">Free Estimates</span>
+      <span class="strip-item">Lifetime Warranty</span>
+      <span class="strip-item">Collision Repair</span>
+      <span class="strip-item">Paint & Refinishing</span>
+      <span class="strip-item">Frame Straightening</span>
+      <span class="strip-item">PDR Dent Removal</span>
+      <span class="strip-item">Glass Replacement</span>
+      <span class="strip-item">Insurance Claims</span>
+      <span class="strip-item">Free Estimates</span>
+      <span class="strip-item">Lifetime Warranty</span>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="tag">What We Do</div>
+        <h2>Complete Auto Body Services</h2>
+        <p>From minor dents to total collision damage, our certified technicians handle every repair with precision.</p>
+      </div>
+      <div class="services-strip">
+        <div class="svc-card"><div class="svc-icon">🚗</div><div class="svc-name">Collision Repair</div><p class="svc-desc">Full structural and cosmetic restoration using OEM parts and manufacturer procedures.</p></div>
+        <div class="svc-card"><div class="svc-icon">🎨</div><div class="svc-name">Paint & Refinishing</div><p class="svc-desc">Computer-matched paint blending for a seamless, factory-quality finish every time.</p></div>
+        <div class="svc-card"><div class="svc-icon">🔧</div><div class="svc-name">Frame Straightening</div><p class="svc-desc">Advanced computerized frame alignment that restores your vehicle's original geometry.</p></div>
+        <div class="svc-card"><div class="svc-icon">✨</div><div class="svc-name">Dent Removal (PDR)</div><p class="svc-desc">Paintless dent repair for dings and dents — fast, affordable, preserves factory paint.</p></div>
+        <div class="svc-card"><div class="svc-icon">🪟</div><div class="svc-name">Glass Replacement</div><p class="svc-desc">OEM windshield and glass replacement with ADAS recalibration included.</p></div>
+        <div class="svc-card"><div class="svc-icon">📋</div><div class="svc-name">Insurance Claims</div><p class="svc-desc">We work directly with all major insurers. We handle the paperwork so you don't have to.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off">
+    <div class="container">
+      <div class="promise-grid">
+        <div class="promise"><div class="promise-num">2,500+</div><div class="promise-label">Vehicles Restored</div><p class="promise-sub">Trusted by drivers across the region since 2009.</p></div>
+        <div class="promise"><div class="promise-num">15+</div><div class="promise-label">Years of Experience</div><p class="promise-sub">Certified technicians with decades of combined expertise.</p></div>
+        <div class="promise"><div class="promise-num">4.9★</div><div class="promise-label">Google Rating</div><p class="promise-sub">Consistently top-rated for quality and customer service.</p></div>
+        <div class="promise"><div class="promise-num">∞</div><div class="promise-label">Lifetime Warranty</div><p class="promise-sub">We stand behind every repair for as long as you own the car.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="tag">Customer Reviews</div>
+        <h2>What Our Customers Say</h2>
+        <p>Real reviews from real drivers who trusted us to restore their vehicles.</p>
+      </div>
+      <div class="reviews-row">
+        <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"After my accident I didn't know where to turn. Flag Run made everything stress-free — they handled the insurance, kept me updated daily, and the car looked better than before the accident."</p><div class="reviewer"><div class="avatar">JM</div><div><div class="rev-name">Jessica M.</div><div class="rev-context">Collision Repair</div></div></div></div>
+        <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"The paint match was absolutely perfect. Finished ahead of schedule and under estimate. I've sent three family members here since. There's nobody else I'd trust with my vehicles."</p><div class="reviewer"><div class="avatar">RT</div><div><div class="rev-name">Ryan T.</div><div class="rev-context">Paint & Refinishing</div></div></div></div>
+        <div class="review-card"><div class="stars">★★★★★</div><p class="review-text">"PDR same day, fraction of what I expected to pay, car looks brand new. The honesty and transparency was refreshing. You can tell this shop has real integrity."</p><div class="reviewer"><div class="avatar">KD</div><div><div class="rev-name">Karen D.</div><div class="rev-context">Dent Removal</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="cta-inner">
+      <h2>Ready to get your vehicle back to <em>perfect</em>?</h2>
+      <button class="btn-primary" style="font-size:15px;padding:16px 34px;white-space:nowrap" onclick="openModal()">Get Your Free Estimate →</button>
+    </div>
+  </div>
+
+</div><!-- /page-home -->
+
+
+<!-- ══════════ ABOUT ══════════ -->
+<div class="page" id="page-about">
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="tag">Our Story</div>
+      <h1>Built on Trust,<br>Driven by Craft.</h1>
+      <p>For over 15 years, Flag Run Auto Body has been the region's most trusted name in collision repair — combining old-school craftsmanship with modern technology.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="about-split">
+        <div class="about-copy">
+          <div class="tag">Who We Are</div>
+          <h2>More Than a Body Shop</h2>
+          <p>Flag Run Auto Body was founded with one belief: every customer deserves honest, expert service and a repair that lasts. We're not a chain — we're a local shop with deep roots in this community, and our reputation is built on the work we do every single day.</p>
+          <p>Our team of I-CAR certified technicians uses state-of-the-art equipment including computerized frame alignment, manufacturer-matched paint mixing systems, and digital documentation throughout every repair. We work with all major insurance companies and handle everything from claim filing to pickup coordination.</p>
+          <p>When you bring your vehicle to Flag Run, you're getting more than a repair. You're getting our word that it'll be done right.</p>
+          <ul class="checklist">
+            <li><div class="chk">✓</div>I-CAR Gold Class Certified Shop</li>
+            <li><div class="chk">✓</div>Direct Repair Network Partner — 20+ Insurance Companies</li>
+            <li><div class="chk">✓</div>Computerized Frame Alignment & Measuring System</li>
+            <li><div class="chk">✓</div>Computer Color-Match Paint Mixing Technology</li>
+            <li><div class="chk">✓</div>Digital Photo Documentation on Every Repair</li>
+            <li><div class="chk">✓</div>SMS & Email Updates Throughout the Repair Process</li>
+            <li><div class="chk">✓</div>Rental Car Coordination Available</li>
+          </ul>
+        </div>
+        <div class="about-aside">
+          <div class="aside-card">
+            <div class="big">15+</div>
+            <div style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Years Serving Our Community</div>
+            <div style="font-size:14px;line-height:1.7;color:var(--text)">Founded in 2009 with a two-bay garage and a commitment to doing things right, Flag Run has grown into one of the most trusted collision centers in West Virginia.</div>
+          </div>
+          <div class="aside-card">
+            <h3>Certifications & Partners</h3>
+            <p style="margin-top:8px">Recognized by leading manufacturers and insurance carriers.</p>
+            <div class="cert-row">
+              <div class="cert-badge">I-CAR Gold Class</div>
+              <div class="cert-badge">ASE Certified</div>
+              <div class="cert-badge">State Farm DRP</div>
+              <div class="cert-badge">GEICO ARX</div>
+              <div class="cert-badge">Progressive PRN</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off">
+    <div class="container">
+      <div class="section-head">
+        <div class="tag">Our Team</div>
+        <h2>The Experts Behind Every Repair</h2>
+        <p>Experienced, certified, and passionate about getting it right.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-photo">👨‍🔧</div><div class="team-name">Mike Flagrun</div><div class="team-role">Owner & Master Technician</div></div>
+        <div class="team-card"><div class="team-photo">👨‍🔧</div><div class="team-name">Dave Carter</div><div class="team-role">Lead Collision Technician</div></div>
+        <div class="team-card"><div class="team-photo">👩‍💼</div><div class="team-name">Sarah Johnson</div><div class="team-role">Insurance & Customer Coordinator</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="cta-inner">
+      <h2>Come see the difference <em>craftsmanship</em> makes.</h2>
+      <button class="btn-primary" style="font-size:15px;padding:16px 34px;white-space:nowrap" onclick="openModal()">Get Free Estimate →</button>
+    </div>
+  </div>
+
+</div><!-- /page-about -->
+
+
+<!-- ══════════ SERVICES ══════════ -->
+<div class="page" id="page-services">
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="tag">Services</div>
+      <h1>Every Repair.<br>Done Right.</h1>
+      <p>Complete collision repair services for every make and model, backed by our lifetime workmanship warranty.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="services-full">
+        <div class="svc-full"><div class="svc-full-icon">🚗</div><h3>Collision Repair</h3><p>Whether it's a fender bender or a total structural rebuild, our certified technicians restore your vehicle to factory specifications using OEM-approved procedures.</p><ul><li>Front & rear-end collision repair</li><li>Quarter panel replacement</li><li>Door & body panel repair</li><li>OEM & aftermarket parts</li></ul></div>
+        <div class="svc-full"><div class="svc-full-icon">🎨</div><h3>Paint & Refinishing</h3><p>We use computerized color-matching technology to blend a perfect finish — whether we're painting one panel or the entire vehicle. Showroom quality every time.</p><ul><li>Computer color-matched paint mixing</li><li>Full vehicle repaints</li><li>Single panel spot repairs</li><li>Clear coat & UV protection</li></ul></div>
+        <div class="svc-full"><div class="svc-full-icon">🔧</div><h3>Frame & Structural Repair</h3><p>Hidden frame damage can make your car unsafe to drive. Our computerized frame measuring and straightening system restores your vehicle's structural integrity and alignment geometry.</p><ul><li>Computerized frame alignment</li><li>Uni-body straightening</li><li>Suspension geometry correction</li><li>Post-repair safety verification</li></ul></div>
+        <div class="svc-full"><div class="svc-full-icon">✨</div><h3>Paintless Dent Removal (PDR)</h3><p>For minor dents and dings that haven't broken the paint, PDR is the fastest and most cost-effective solution. Same-day service on most jobs.</p><ul><li>Hail damage repair</li><li>Parking lot door dings</li><li>Minor creases & dents</li><li>Preserves factory paint & value</li></ul></div>
+        <div class="svc-full"><div class="svc-full-icon">🪟</div><h3>Glass Replacement</h3><p>Cracked or shattered auto glass is a safety hazard. We replace windshields and all vehicle glass using OEM-quality materials, with ADAS camera recalibration included where required.</p><ul><li>Windshield replacement</li><li>Side & rear glass</li><li>ADAS safety system recalibration</li><li>Rock chip repair</li></ul></div>
+        <div class="svc-full"><div class="svc-full-icon">📋</div><h3>Insurance Claims Assistance</h3><p>Navigating an insurance claim after an accident is stressful. We're a Direct Repair Partner with over 20 major insurance carriers and handle the entire process on your behalf.</p><ul><li>Direct billing to all major insurers</li><li>Supplement negotiation on your behalf</li><li>Rental car coordination</li><li>Detailed digital documentation</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-off">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start">
+        <div>
+          <div class="tag">Our Process</div>
+          <h2 class="serif" style="font-size:36px;letter-spacing:-.5px;margin-bottom:14px">Simple, Transparent,<br>Start to Finish.</h2>
+          <p style="font-size:15px;color:var(--text-muted);line-height:1.7">We keep you informed at every stage so there are no surprises — only results.</p>
+        </div>
+        <div class="process-steps">
+          <div class="step"><div class="step-num">01</div><div class="step-body"><h4>Free Estimate</h4><p>Bring your vehicle in or submit photos online. We provide a detailed written estimate at no charge with no obligation.</p></div></div>
+          <div class="step"><div class="step-num">02</div><div class="step-body"><h4>Insurance Coordination</h4><p>We contact your insurer, handle the claim paperwork, and get approval for all necessary repairs — you sign off and we take it from there.</p></div></div>
+          <div class="step"><div class="step-num">03</div><div class="step-body"><h4>Expert Repair</h4><p>Our certified technicians complete all structural, body, and paint work using manufacturer-approved procedures and quality parts.</p></div></div>
+          <div class="step"><div class="step-num">04</div><div class="step-body"><h4>Quality Check & Delivery</h4><p>Every repair goes through a multi-point quality inspection before you see it. We walk you through the finished work before you drive away.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="cta-inner">
+      <h2>Not sure what your repair will cost? Let's <em>find out — free.</em></h2>
+      <button class="btn-primary" style="font-size:15px;padding:16px 34px;white-space:nowrap" onclick="openModal()">Get Free Estimate →</button>
+    </div>
+  </div>
+
+</div><!-- /page-services -->
+
+
+<!-- ══════════ REVIEWS ══════════ -->
+<div class="page" id="page-reviews">
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="tag">Customer Reviews</div>
+      <h1>Trusted by<br>Thousands of Drivers.</h1>
+      <p>Our reputation is built one repair at a time. Here's what customers say about their experience with Flag Run Auto Body.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="rating-bar">
+        <div class="rating-big">4.9</div>
+        <div class="rating-right">
+          <div class="rating-stars">★★★★★</div>
+          <div style="font-weight:600;font-size:15px;margin-bottom:4px">Excellent Rating</div>
+          <div class="rating-count">Based on 180+ verified Google reviews</div>
+        </div>
+      </div>
+      <div class="reviews-full">
+        <div class="review-full"><div class="stars">★★★★★</div><p class="review-text">"After my accident I didn't know where to turn. Flag Run made everything stress-free — they handled the insurance, kept me updated daily, and the car looked better than before the accident. I cannot recommend them enough."</p><div class="reviewer"><div class="avatar">JM</div><div><div class="rev-name">Jessica M.</div><div class="rev-context">Collision Repair · State Farm Claim</div></div></div></div>
+        <div class="review-full"><div class="stars">★★★★★</div><p class="review-text">"The paint match was absolutely flawless. You literally cannot tell there was ever any damage. They finished two days ahead of schedule and under the estimate. I've since sent my parents and brother here as well."</p><div class="reviewer"><div class="avatar">RT</div><div><div class="rev-name">Ryan T.</div><div class="rev-context">Paint & Refinishing</div></div></div></div>
+        <div class="review-full"><div class="stars">★★★★★</div><p class="review-text">"PDR same day, and the cost was a fraction of what I expected. The honesty and transparency were genuinely refreshing. My car looks brand new. I'll never go anywhere else for body work."</p><div class="reviewer"><div class="avatar">KD</div><div><div class="rev-name">Karen D.</div><div class="rev-context">Paintless Dent Removal</div></div></div></div>
+        <div class="review-full"><div class="stars">★★★★★</div><p class="review-text">"Hit a deer on Route 50 and had serious front-end damage. Flag Run handled everything with my Allstate claim, got me in a rental same day, and had my truck back to me looking perfect in less than a week."</p><div class="reviewer"><div class="avatar">TW</div><div><div class="rev-name">Tom W.</div><div class="rev-context">Deer Collision · Allstate Claim</div></div></div></div>
+        <div class="review-full"><div class="stars">★★★★★</div><p class="review-text">"I was nervous about a repair this big but they walked me through every step. The team answered every question patiently and the results were incredible. Truly world-class shop for being a local business."</p><div class="reviewer"><div class="avatar">AC</div><div><div class="rev-name">Amy C.</div><div class="rev-context">Structural Repair</div></div></div></div>
+        <div class="review-full"><div class="stars">★★★★★</div><p class="review-text">"Had some hail damage on the roof and hood. Was expecting it to be a nightmare — it was totally painless. Quick, affordable, and perfect results. This shop has earned a customer for life."</p><div class="reviewer"><div class="avatar">BH</div><div><div class="rev-name">Brian H.</div><div class="rev-context">Hail Damage · PDR</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <div class="cta-inner">
+      <h2>Join thousands of satisfied customers. Get your <em>free estimate</em> today.</h2>
+      <button class="btn-primary" style="font-size:15px;padding:16px 34px;white-space:nowrap" onclick="openModal()">Get Free Estimate →</button>
+    </div>
+  </div>
+
+</div><!-- /page-reviews -->
+
+
+<!-- ══════════ CONTACT ══════════ -->
+<div class="page" id="page-contact">
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="tag">Contact Us</div>
+      <h1>Get In Touch.</h1>
+      <p>Stop by the shop, give us a call, or send a message below. We're here Monday through Saturday.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+        <div class="contact-details">
+          <h2>Visit Our Shop</h2>
+          <p>We'd love to take a look at your vehicle and provide an honest, no-obligation estimate in person.</p>
+          <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label">Address</div><div class="contact-item-val">123 Flag Run Rd<br>Clarksburg, WV 26330</div></div></div>
+          <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-item-label">Phone</div><div class="contact-item-val">(304) 555-0000</div></div></div>
+          <div class="contact-item"><div class="contact-icon">✉️</div><div><div class="contact-item-label">Email</div><div class="contact-item-val">info@flagrunauto.com</div></div></div>
+          <div class="hours-grid">
+            <div class="hour-row"><span>Monday</span><span>8am – 5pm</span></div>
+            <div class="hour-row"><span>Tuesday</span><span>8am – 5pm</span></div>
+            <div class="hour-row"><span>Wednesday</span><span>8am – 5pm</span></div>
+            <div class="hour-row"><span>Thursday</span><span>8am – 5pm</span></div>
+            <div class="hour-row"><span>Friday</span><span>8am – 5pm</span></div>
+            <div class="hour-row"><span>Saturday</span><span>9am – 2pm</span></div>
+            <div class="hour-row"><span>Sunday</span><span>Closed</span></div>
+          </div>
+          <div style="margin-top:32px">
+            <button class="btn-primary" onclick="openModal()">Get Free Estimate →</button>
+          </div>
+        </div>
+        <div class="simple-form">
+          <h3>Send a Message</h3>
+          <p>Have a quick question? We'll get back to you within a few hours during business hours.</p>
+          <div class="field-row">
+            <div class="field"><label>First Name</label><input type="text" placeholder="John"></div>
+            <div class="field"><label>Last Name</label><input type="text" placeholder="Doe"></div>
+          </div>
+          <div class="field"><label>Phone</label><input type="tel" placeholder="(304) 555-0000"></div>
+          <div class="field"><label>Email</label><input type="email" placeholder="john@email.com"></div>
+          <div class="field"><label>Message</label><textarea placeholder="How can we help you?"></textarea></div>
+          <button class="btn-primary" style="width:100%;padding:14px;font-size:14px">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-contact -->
+
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="cursor:pointer" onclick="showPage('home')">
+          <div class="logo-mark">FR</div>
+          <span class="logo-text" style="color:white">Flag Run <em>Auto Body</em></span>
+        </div>
+        <p>West Virginia's trusted collision repair experts. Restoring vehicles and peace of mind since 2009.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('about')">About</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('reviews')">Reviews</a></li>
+          <li><a onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a onclick="showPage('services')">Collision Repair</a></li>
+          <li><a onclick="showPage('services')">Paint & Refinishing</a></li>
+          <li><a onclick="showPage('services')">Frame Repair</a></li>
+          <li><a onclick="showPage('services')">PDR Dent Removal</a></li>
+          <li><a onclick="showPage('services')">Glass Replacement</a></li>
+          <li><a onclick="showPage('services')">Insurance Claims</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:3045550000">(304) 555-0000</a></li>
+          <li><a href="mailto:info@flagrunauto.com">info@flagrunauto.com</a></li>
+          <li><a>123 Flag Run Rd, WV 26330</a></li>
+          <li><a>Mon–Fri 8am–5pm</a></li>
+          <li><a>Sat 9am–2pm</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 <span>Flag Run Auto Body</span>. All rights reserved.</div>
+      <div class="footer-copy">Clarksburg, West Virginia</div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ─── ESTIMATE MODAL ─── -->
+<div class="overlay" id="overlay" onclick="handleOvClick(event)">
+  <div class="modal" id="modalBox">
+
+    <div id="formWrap">
+      <div class="modal-head">
+        <div>
+          <h2>Free Estimate <span>Request</span></h2>
+          <p>Three quick steps — takes less than 2 minutes.</p>
+        </div>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="step-prog">
+          <div class="step-tab active" id="tab1">1 · Contact</div>
+          <div class="step-tab" id="tab2">2 · Vehicle</div>
+          <div class="step-tab" id="tab3">3 · Damage</div>
+        </div>
+
+        <!-- Step 1: Contact -->
+        <div class="form-step active" id="step1">
+          <div class="field-row">
+            <div class="field"><label>First Name *</label><input id="m_fname" type="text" placeholder="John"></div>
+            <div class="field"><label>Last Name *</label><input id="m_lname" type="text" placeholder="Doe"></div>
+          </div>
+          <div class="field"><label>Phone Number *</label><input id="m_phone" type="tel" placeholder="(304) 555-0000"></div>
+          <div class="field"><label>Email Address</label><input id="m_email" type="email" placeholder="john@email.com"></div>
+        </div>
+
+        <!-- Step 2: Vehicle -->
+        <div class="form-step" id="step2">
+          <div class="field-row">
+            <div class="field"><label>Year *</label>
+              <select id="m_year"><option value="">Select Year</option><script>for(let y=2025;y>=1995;y--)document.write(`<option>${y}</option>`)</script></select>
+            </div>
+            <div class="field"><label>Make *</label><input id="m_make" type="text" placeholder="Toyota, Ford, Honda…"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Model *</label><input id="m_model" type="text" placeholder="Camry, F-150, Civic…"></div>
+            <div class="field"><label>Color</label><input id="m_color" type="text" placeholder="Silver, White, Black…"></div>
+          </div>
+          <div class="field"><label>Insurance Claim?</label>
+            <select id="m_ins">
+              <option value="">Select…</option>
+              <option>Yes — I have a claim number</option>
+              <option>Yes — haven't filed yet</option>
+              <option>No — paying out of pocket</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Step 3: Damage -->
+        <div class="form-step" id="step3">
+          <div class="field"><label>Area(s) Damaged *</label>
+            <select id="m_area">
+              <option value="">Select primary area</option>
+              <option>Front End / Bumper</option>
+              <option>Rear End / Bumper</option>
+              <option>Driver Side</option>
+              <option>Passenger Side</option>
+              <option>Hood or Roof</option>
+              <option>Multiple Areas</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Describe the Damage *</label>
+            <textarea id="m_desc" placeholder="Briefly describe what happened and the visible damage. More detail helps us give a more accurate estimate."></textarea>
+          </div>
+          <div class="field"><label>Photos (optional but helpful)</label>
+            <div class="upload-zone">
+              <input type="file" id="m_photos" accept="image/*" multiple onchange="previewPhotos(event)">
+              <p><strong>Click to upload photos</strong><br><span style="font-size:12px">JPG / PNG · Multiple allowed</span></p>
+            </div>
+            <div class="thumbs" id="thumbs"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-foot">
+        <button class="btn-back" id="btnBack" style="visibility:hidden" onclick="stepBack()">← Back</button>
+        <button class="btn-next" id="btnNext" onclick="stepNext()">Continue →</button>
+        <button class="btn-submit-main" id="btnSubmit" style="display:none" onclick="submitForm()">Submit Request →</button>
+      </div>
+    </div>
+
+    <div class="success" id="successWrap">
+      <div class="success-mark">✅</div>
+      <h3>Request Received!</h3>
+      <p>Thanks for reaching out to Flag Run Auto Body. We'll review your details and contact you within <strong>24 hours</strong> to discuss your estimate.<br><br>Questions? Call us at <strong>(304) 555-0000</strong></p>
+      <button class="btn-primary" onclick="closeModal()">Close</button>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+// ── PAGE NAVIGATION ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav ul a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'instant'});
+}
+
+// ── HAMBURGER ──
+function toggleMenu() {
+  document.getElementById('mobileNav').classList.toggle('open');
+}
+
+// ── MODAL ──
+let currentStep = 1;
+const totalSteps = 3;
+
+function openModal() {
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  resetModal();
+}
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOvClick(e) {
+  if (e.target === document.getElementById('overlay')) closeModal();
+}
+function resetModal() {
+  currentStep = 1;
+  document.getElementById('formWrap').style.display = 'block';
+  document.getElementById('successWrap').classList.remove('show');
+  updateStep();
+}
+function updateStep() {
+  for (let i = 1; i <= totalSteps; i++) {
+    document.getElementById('step' + i).classList.toggle('active', i === currentStep);
+    const tab = document.getElementById('tab' + i);
+    tab.classList.remove('active', 'done');
+    if (i === currentStep) tab.classList.add('active');
+    else if (i < currentStep) tab.classList.add('done');
+  }
+  document.getElementById('btnBack').style.visibility = currentStep > 1 ? 'visible' : 'hidden';
+  document.getElementById('btnNext').style.display = currentStep < totalSteps ? 'block' : 'none';
+  document.getElementById('btnSubmit').style.display = currentStep === totalSteps ? 'block' : 'none';
+}
+function stepNext() {
+  if (!validateStep()) return;
+  if (currentStep < totalSteps) { currentStep++; updateStep(); }
+}
+function stepBack() {
+  if (currentStep > 1) { currentStep--; updateStep(); }
+}
+function validateStep() {
+  const rules = {
+    1: [{id:'m_fname'},{id:'m_lname'},{id:'m_phone'}],
+    2: [{id:'m_year'},{id:'m_make'},{id:'m_model'}],
+    3: [{id:'m_area'},{id:'m_desc'}]
+  };
+  let ok = true;
+  (rules[currentStep] || []).forEach(r => {
+    const el = document.getElementById(r.id);
+    if (!el.value.trim()) {
+      el.style.borderColor = 'var(--red)';
+      el.style.outline = '2px solid rgba(200,37,27,.2)';
+      ok = false;
+    } else {
+      el.style.borderColor = '';
+      el.style.outline = '';
+    }
+  });
+  if (!ok) return false;
+  return true;
+}
+function submitForm() {
+  if (!validateStep()) return;
+  document.getElementById('formWrap').style.display = 'none';
+  document.getElementById('successWrap').classList.add('show');
+}
+function previewPhotos(e) {
+  const container = document.getElementById('thumbs');
+  container.innerHTML = '';
+  Array.from(e.target.files).forEach(f => {
+    const img = document.createElement('img');
+    img.src = URL.createObjectURL(f);
+    container.appendChild(img);
+  });
+}
+</script>
+
+</body>
+</html>

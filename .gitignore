@@ -1,0 +1,5 @@
+.DS_Store
+error_log
+*.zip
+node_modules
+_zip_extract/
